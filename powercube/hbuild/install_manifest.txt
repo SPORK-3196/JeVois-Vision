@@ -1,0 +1,3 @@
+/jevois/modules/spork/powercube/postinstall
+/jevois/modules/spork/powercube/powercube.so
+/jevois/share/README.txt
