@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+2488bd99e2b029df8f7b7561226d2766 ../src/Modules/powercube/modinfo.yaml
+30aca78af2ff557461112e098f282e6e CMakeFiles/jvpkg
+956bc043768565afa8202b8ef23549d1 CMakeFiles/modinfo_powercube
