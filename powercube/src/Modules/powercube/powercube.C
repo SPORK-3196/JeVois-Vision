@@ -121,7 +121,7 @@ public:
                 cv::Size(3,3),      //   Size
                 cv::Point(-1,-1)),  //   Anchor (centered)
             cv::Point(-1,-1),       // Anchor (centered)
-            dilationIt::get());      // Iterations
+            dilationIt::get());     // Iterations
 
         if (displayLevel::get() == 1)  // If display level is set to threshold
             jevois::rawimage::pasteGreyToYUYV(proc_img, outimg, 0, 20);
