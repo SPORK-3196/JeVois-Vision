@@ -51,7 +51,7 @@ class powercube : public jevois::Module,
                     thresh1, thresh2, aperture, l2grad, line_thresh>    // Canny
 {
 public:
-    // Default base class constructor ok
+    // Default base class constructor
     using jevois::Module::Module;
 
     // Virtual destructor for safe inheritance
@@ -116,7 +116,7 @@ public:
         cv::dilate(
             proc_img,               // Input image
             proc_img,               // Output image
-            getStructuringElement(  // Kernel (shape the erosion occurs in)
+            getStructuringElement(  // Kernel (shape the dilation occurs in)
                 cv::MORPH_ELLIPSE,  //   Type (RECT, CROSS, ELLIPSE)
                 cv::Size(3,3),      //   Size
                 cv::Point(-1,-1)),  //   Anchor (centered)
