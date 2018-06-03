@@ -150,8 +150,9 @@ public:
             1,                      // Resolution of polar coordinate 'r' in pixels
             CV_PI/180,              // Resolution of theta coordinate in pixels
             line_thresh::get(),     // Threshold
-            50,                     // 'srn' - Purpose unknown
-            10);                    // 'stn' - Purpose unknown
+            50,                     // Minimum length of lines
+            10);                    // Maximum allowed gap between points in a line
+        
         // Draw the lines on screen, if display level is set to line detect
         if (displayLevel::get() == 3)
             for( size_t i = 0; i < lines.size(); i++ )
