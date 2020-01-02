@@ -16,5 +16,15 @@ import numpy as np
 class RetroTapeTracker:
     
     def process(self, inframe, outframe):
-        img = inframe.getCvBGR()
-        outframe.sendCv(img)
+        # Get the raw input image
+        raw = inframe.getCvBGR()
+        
+        # Convert the image to HSV
+        hsv = cv2.cvtColor(raw, cv2.COLOR_BGR2HSV)
+        
+        # Threshold the image with min and max HSV values
+        hsv_cooked = cv2.inRange(hsv, (85,0,240), (90,100,255))
+        
+        
+        # Output the "cooked" image
+        outframe.sendCv(hsv_cooked)
