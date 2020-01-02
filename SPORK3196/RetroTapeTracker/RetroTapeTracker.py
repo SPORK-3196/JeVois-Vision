@@ -16,6 +16,8 @@ import numpy as np
 class RetroTapeTracker:
     
     def process(self, inframe, outframe):
+        kernel = np.ones((30,5),np.uint8)
+        
         # Get the raw input image
         raw = inframe.getCvBGR()
         
@@ -25,6 +27,8 @@ class RetroTapeTracker:
         # Threshold the image with min and max HSV values
         hsv_cooked = cv2.inRange(hsv, (85,0,240), (90,100,255))
         
+        # Remove noise from the image (small patches of detection)
+        hsv_cooked = cv2.morphologyEx(hsv_cooked, cv2.MORPH_OPEN, kernel)
         
         # Output the "cooked" image
         outframe.sendCv(hsv_cooked)
