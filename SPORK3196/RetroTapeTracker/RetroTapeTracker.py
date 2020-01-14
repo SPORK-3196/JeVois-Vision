@@ -16,7 +16,7 @@ import numpy as np
 class RetroTapeTracker:
     
     def process(self, inframe, outframe):
-        kernel = np.ones((30,10),np.uint8)
+        kernel = np.ones((10,10),np.uint8)
         
         # Get the raw input image
         raw = inframe.getCvBGR()
@@ -25,7 +25,7 @@ class RetroTapeTracker:
         hsv = cv2.cvtColor(raw, cv2.COLOR_BGR2HSV)
         
         # Threshold the image with min and max HSV values
-        hsv_cooked = cv2.inRange(hsv, (50,0,180), (100,255,255))
+        hsv_cooked = cv2.inRange(hsv, (70,0,120), (100,255,255))
                                     #  50,0,180,   100,255,255
         
         # Remove noise from the image (small patches of detection)
@@ -33,17 +33,18 @@ class RetroTapeTracker:
         
         # Find edges using Canny edge detection
         edgesImg = cv2.Canny(hsv_cooked, 10, 20) # Note: I have no idea what these number mean or do
+        edgesImg = cv2.Canny(hsv_cooked, 1, 1) # Note: I have no idea what these number mean or do
         
         try:
             edges = cv2.HoughLinesP(edgesImg, 1, np.pi/180, 100, 10, 10)
+            text = "edges:" + str(len(edges))
             for edge in edges:
                 for x1,y1,x2,y2 in edge:
-                    text = "(" + str(x1) + "," + str(y1) + ") (" + str(x2) + "," + str(y2) + ")"
-                    jevois.LINFO(text)
-            jevois.LINFO("-----------")
+                    text += "\t(" + str(x1) + "," + str(y1) + ") (" + str(x2) + "," + str(y2) + ")"
+            jevois.LINFO(text)
         except:
             # Do nothing!
-            a = 0
+            jevois.LINFO("Nada")
         
         # Output the "cooked" image
         outframe.sendCv(edgesImg)
