@@ -33,7 +33,6 @@ class RetroTapeTracker:
         
         # Find edges using Canny edge detection
         edgesImg = cv2.Canny(hsv_cooked, 10, 20) # Note: I have no idea what these number mean or do
-        edgesImg = cv2.Canny(hsv_cooked, 1, 1) # Note: I have no idea what these number mean or do
         
         try:
             edges = cv2.HoughLinesP(edgesImg, 1, np.pi/180, 100, 10, 10)
