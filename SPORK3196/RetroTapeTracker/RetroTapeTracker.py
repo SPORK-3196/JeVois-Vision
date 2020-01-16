@@ -54,7 +54,7 @@ class RetroTapeTracker:
             avgX = avgX / len(edges)
             avgY = avgY / len(edges)
             outImg = cv2.line(raw, (int(avgX), 0), (int(avgX), 500), (0,0,0), 2)
-            #outImg = cv2.line(outImg, (0, int(avgY)), (700, int(avgY)), (0,0,0), 2)
+            outImg = cv2.line(outImg, (0, int(avgY)), (700, int(avgY)), (0,0,0), 2)
             text += "\t" + str(int(avgX))
             jevois.LINFO(text)
         except:
