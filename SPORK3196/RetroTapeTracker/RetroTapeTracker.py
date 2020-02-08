@@ -26,11 +26,13 @@ class RetroTapeTracker:
         hsv = cv2.cvtColor(raw, cv2.COLOR_BGR2HSV)
         
         # Threshold the image with min and max HSV values
-        hsv_cooked = cv2.inRange(hsv, (70,50,200), (100,220,255))
+        hsv_cooked = cv2.inRange(hsv, (0,0,230), (20,20,255))
                                     # (70,0,170), (130,255,255) what we're doing
                                     #  50,0,180,   100,255,255
                                     #  70,0,120,   100,255,255
                                     #  70,30,220,  100,140,255
+                                    #  70,50,200   100,220,255
+                                    #  0,0,250     10,10,255
         
         # Remove noise from the image (small patches of detection)
         hsv_cooked = cv2.morphologyEx(hsv_cooked, cv2.MORPH_OPEN, kernel)
@@ -62,4 +64,25 @@ class RetroTapeTracker:
             jevois.LINFO("Nada")
         
         # Output the "cooked" image
-        outframe.sendCv(outImg)
+        minH = 1000.0
+        maxH = 0.0
+        minS = 1000.0
+        maxS = 0.0
+        minV = 1000.0
+        maxV = 0.0
+        for x in range(325,346):
+            h, s, v = hsv[267][x]
+            jevois.LINFO("H,S,V: " + str(h) + "  " + str(s) + "  " + str(v))
+            minH = min(minH, h)
+            maxH = max(maxH, h)
+            minS = min(minS, s)
+            maxS = max(maxS, s)
+            minV = min(minV, v)
+            maxV = max(maxV, v)
+        pixel_min = (minH, minS, minV)
+        pixel_max = (maxH, maxS, maxV)
+        
+        jevois.LINFO("PIXEL RANGE: " + str(pixel_min) + "  " + str(pixel_max))
+        
+        outImg = cv2.line(outImg, (325,267), (345,267), (127,127,127), 2)
+        outframe.sendCv(hsv_cooked)
